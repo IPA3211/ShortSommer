@@ -6,8 +6,9 @@ public class HumanCharacter : MonoBehaviour, ICharacter
 {
     Rigidbody rb;
 
-    float rotSpeed = 100f;
-    float moveSpeed = 500f;
+    float rotSpeed = 30f;
+    float moveSpeed = 1f;
+    float maxSpeed = 10f;
 
     public void AttachController(IController controller)
     {
@@ -22,8 +23,15 @@ public class HumanCharacter : MonoBehaviour, ICharacter
     public void Move(Vector2 direction)
     {
         var direction3D = new Vector3(direction.x, 0, direction.y);
-        transform.forward = Vector3.Lerp(transform.forward, direction3D, rotSpeed * Time.deltaTime);
-        rb.AddForce(transform.forward * moveSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction3D), 0.4f);
+        
+        if(Vector2.Angle(direction, new Vector2(transform.forward.x, transform.forward.z)) < 10)
+        {
+            if(rb.velocity.magnitude < maxSpeed)
+            {
+                rb.AddForce(transform.forward * moveSpeed, ForceMode.VelocityChange);
+            }
+        }
     }
 
     public void Start()

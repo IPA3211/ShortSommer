@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour, IController
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (myInputSystem.Player.Move.IsInProgress())
         {
