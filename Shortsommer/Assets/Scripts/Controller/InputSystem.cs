@@ -90,7 +90,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""a31c9295-5d1d-4ce2-a7b3-63d72c4d4cc4"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
@@ -101,7 +101,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""5f193cae-737b-4c87-9700-98803898be64"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
