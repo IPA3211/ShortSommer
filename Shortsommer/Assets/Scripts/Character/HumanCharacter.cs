@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class HumanCharacter : MonoBehaviour, ICharacter
 {
     Rigidbody rb;
@@ -13,56 +14,52 @@ public class HumanCharacter : MonoBehaviour, ICharacter
 
     Vector2 moveDir = Vector2.zero;
 
-    Controller controller = null;
-    public Controller Controller => controller;
+    IController controller = null;
+    public IController Controller => controller;
 
-    public void AttachController(Controller controller)
+    public void AttachController(IController controller)
     {
         if(this.controller == controller) return;
 
         DetachController();
         this.controller = controller;
-
-        controller.Move.performed += Move;
-        controller.Move.canceled += Move;
-        controller.Jump.started += Jump;
+        controller.AttachCharacter(this);
     }
 
     public void DetachController()
     {
         if(controller == null) return;
 
-        controller.Move.performed -= Move;
-        controller.Move.canceled -= Move;
-        controller.Jump.started -= Jump;
-
         moveDir = Vector2.zero;
-
+        controller.DetachCharacter();
         controller = null;
-    }
-
-    public void Move(object direction)
-    {
-        Move((Vector2) direction);
     }
     public void Move(Vector2 direction)
     {
         moveDir = direction;
     }
 
-    public void Jump(object _)
-    {
-        Debug.Log("aaa");
-        DetachController();
-    }
-
     public void Sprint(bool toggle)
     {
-
+        Debug.Log("Sprint");
     }
     public void Aimming(Vector3 target)
     {
+        Debug.Log("Aimming"); 
+    }
+    public void Jump(bool o)
+    {
+        Debug.Log("Jump");
+    }
 
+    public void Interact(bool o)
+    {
+        Debug.Log("Interact");
+    }
+
+    public void Fire(bool o)
+    {
+        Debug.Log("Fire");
     }
 
     void Move()
@@ -91,4 +88,5 @@ public class HumanCharacter : MonoBehaviour, ICharacter
     {
         rb = GetComponent<Rigidbody>();
     }
+
 }
