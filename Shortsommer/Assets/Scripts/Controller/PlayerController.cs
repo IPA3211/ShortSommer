@@ -5,7 +5,7 @@ using static UnityEngine.Rendering.DebugUI;
 public class PlayerController : MonoBehaviour, IController
 {
     public HumanCharacter defaultAttach;
-    InputSystem myInputSystem;
+    InputSystem playerInput;
     ICharacter character;
 
     public ICharacter Character => character;
@@ -28,16 +28,15 @@ public class PlayerController : MonoBehaviour, IController
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (myInputSystem.Player.Move.IsInProgress())
+        if (playerInput.Player.Move.IsInProgress())
         {
-            character.Move(myInputSystem.Player.Move.ReadValue<Vector2>());
+            character.Move(playerInput.Player.Move.ReadValue<Vector2>());
         }
     }
 
     void Start()
     {
-        myInputSystem = new InputSystem();
-        myInputSystem.Player.Move.Enable();
-        AttachCharacter(defaultAttach);
+        playerInput = new InputSystem();
+        playerInput.Player.Move.Enable();
     }
 }
