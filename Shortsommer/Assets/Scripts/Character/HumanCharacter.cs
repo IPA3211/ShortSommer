@@ -10,14 +10,22 @@ public class HumanCharacter : MonoBehaviour, ICharacter
     float moveSpeed = 1f;
     float maxSpeed = 10f;
 
+    IController controller = null;
+    public IController Controller => controller;
+
     public void AttachController(IController controller)
     {
-        throw new System.NotImplementedException();
+        if(this.controller == controller) return;
+
+        DetachController();
+        this.controller = controller;
+        controller.AttachCharacter(this);
     }
 
     public void DetachController()
-    {
-        throw new System.NotImplementedException();
+    { 
+        controller?.DetachCharacter();
+        controller = null;
     }
 
     public void Move(Vector2 direction)

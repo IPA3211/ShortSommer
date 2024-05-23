@@ -12,11 +12,16 @@ public class PlayerController : MonoBehaviour, IController
 
     public void AttachCharacter(ICharacter character)
     {
+        if(this.character == character) return;
+
+        DetachCharacter();
         this.character = character;
+        character.AttachController(this);
     }
 
     public void DetachCharacter()
     {
+        character?.DetachController();
         character = null;
     }
 
