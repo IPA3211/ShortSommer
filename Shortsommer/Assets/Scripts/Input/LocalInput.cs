@@ -12,14 +12,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public partial class @InputSystem: IInputActionCollection2, IDisposable
+public partial class @LocalInput: IInputActionCollection2, IDisposable
 {
     public InputActionAsset asset { get; }
-    public @InputSystem()
+    public @LocalInput()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""InputAction"",
@@ -293,8 +292,8 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Aimming;
     public struct PlayerActions
     {
-        private @InputSystem m_Wrapper;
-        public PlayerActions(@InputSystem wrapper) { m_Wrapper = wrapper; }
+        private @LocalInput m_Wrapper;
+        public PlayerActions(@LocalInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;

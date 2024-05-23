@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+//지금 Player 가 키보드로 누르고 있는 것들
+
 [Serializable]
 public struct InputStruct
 {

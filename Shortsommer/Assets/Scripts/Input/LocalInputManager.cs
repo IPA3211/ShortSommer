@@ -1,21 +1,35 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : Controller, InputSystem.IPlayerActions
+public class LocalInputManager : MonoBehaviour, LocalInput.IPlayerActions, IInputManager
 {
-    InputSystem playerInput;
+    LocalInput playerInput;
+    InputEventHandler inputEventHandler;
     InputStruct input;
 
-    public override InputStruct InputInfo => input;
+    public InputStruct InputInfo => input;
+    public InputEventHandler InputEventHandler => inputEventHandler;
+
+    public void Awake()
+    {
+        playerInput = new LocalInput();
+        playerInput.Player.Enable();
+        playerInput.Player.AddCallbacks(this);
+
+        inputEventHandler = new InputEventHandler();
+    }
+
+    void FixedUpdate()
+    {
+        inputEventHandler.InputEventCheckLoop(input);
+    }
 
     public void OnAimming(InputAction.CallbackContext context)
     {
         RaycastHit hit;
         var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        if(Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit))
         {
             Debug.Log(hit.point);
         }
@@ -76,13 +90,5 @@ public class PlayerController : Controller, InputSystem.IPlayerActions
         {
             input.m_Sprint = false;
         }
-    }
-
-    void Start()
-    {
-        playerInput = new InputSystem();
-        playerInput.Player.Enable();
-
-        playerInput.Player.AddCallbacks(this);
     }
 }
