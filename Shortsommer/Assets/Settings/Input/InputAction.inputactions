@@ -20,6 +20,24 @@
                     "id": "40a5ad07-da13-46e9-a488-4536f7d4fbfa",
                     "expectedControlType": "Button",
                     "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Sprint",
+                    "type": "Button",
+                    "id": "7408ca71-c0ff-4659-8284-24b038cb1678",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "f5b899c8-f3e3-4344-acfd-3f7f2499b363",
+                    "expectedControlType": "Button",
+                    "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
@@ -33,9 +51,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interact",
+                    "name": "Aimming",
                     "type": "Button",
-                    "id": "f5b899c8-f3e3-4344-acfd-3f7f2499b363",
+                    "id": "fe37a3ab-371f-4c6e-814c-234ab74d249f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -122,6 +140,28 @@
                 },
                 {
                     "name": "",
+                    "id": "50ef650f-70ab-4656-8c7f-2f5719d88759",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Aimming",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b6c178d9-fdd6-4502-a88d-4810d0229a6a",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "97dc90bf-b1e5-40ef-bc0d-6297099d8afe",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -140,12 +180,12 @@
             "bindingGroup": "PC",
             "devices": [
                 {
-                    "devicePath": "<Keyboard>",
+                    "devicePath": "<Mouse>/{Pressure}",
                     "isOptional": false,
                     "isOR": false
                 },
                 {
-                    "devicePath": "<Mouse>/{Pressure}",
+                    "devicePath": "<Keyboard>",
                     "isOptional": false,
                     "isOR": false
                 }
