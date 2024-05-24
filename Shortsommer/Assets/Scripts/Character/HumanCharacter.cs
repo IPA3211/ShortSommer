@@ -77,14 +77,18 @@ public class HumanCharacter : MonoBehaviour, ICharacter
     {
         if (moveDir != Vector2.zero && isOnGround)
         {
-            var direction3D = Vector3.ProjectOnPlane(new Vector3(moveDir.x, 0, moveDir.y), slopeNormal);
+            var direction3D = new Vector3(moveDir.x, 0, moveDir.y);
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction3D), 0.3f);
+
+            var projectVector = Vector3.ProjectOnPlane(transform.forward, slopeNormal);
+            projectVector.Normalize();
+            Debug.Log(projectVector);
 
             if (Vector2.Angle(moveDir, new Vector2(transform.forward.x, transform.forward.z)) < 10)
             {
                 if (rb.velocity.magnitude < maxSpeed)
                 {
-                    rb.AddForce(transform.forward * accSpeed, ForceMode.VelocityChange);
+                    rb.AddForce(projectVector * accSpeed, ForceMode.VelocityChange);
                 }
             }
         }
@@ -95,10 +99,9 @@ public class HumanCharacter : MonoBehaviour, ICharacter
         int layerMask = 1 << LayerMask.NameToLayer("Ground");
         var ray = new Ray(slopeSensorPos.position, Vector3.down);
 
-        if(Physics.Raycast(ray, out var hit, 3f, layerMask))
+        if(Physics.Raycast(ray, out var hit, 2f, layerMask))
         {
             slopeNormal = hit.normal;
-            Debug.Log(hit.collider.name);
         }
         else
         {
