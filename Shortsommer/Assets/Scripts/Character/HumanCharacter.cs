@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Rigidbody))]
 public class HumanCharacter : MonoBehaviour, ICharacter
@@ -74,10 +75,10 @@ public class HumanCharacter : MonoBehaviour, ICharacter
 
     void Move()
     {
-        if (moveDir != Vector2.zero)
+        if (moveDir != Vector2.zero && isOnGround)
         {
-            var direction3D = new Vector3(moveDir.x, 0, moveDir.y);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction3D), 0.4f);
+            var direction3D = Vector3.ProjectOnPlane(new Vector3(moveDir.x, 0, moveDir.y), slopeNormal);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction3D), 0.3f);
 
             if (Vector2.Angle(moveDir, new Vector2(transform.forward.x, transform.forward.z)) < 10)
             {
@@ -89,8 +90,25 @@ public class HumanCharacter : MonoBehaviour, ICharacter
         }
     }
 
+    void GetSlopeNormal()
+    {
+        int layerMask = 1 << LayerMask.NameToLayer("Ground");
+        var ray = new Ray(slopeSensorPos.position, Vector3.down);
+
+        if(Physics.Raycast(ray, out var hit, 3f, layerMask))
+        {
+            slopeNormal = hit.normal;
+            Debug.Log(hit.collider.name);
+        }
+        else
+        {
+            slopeNormal = Vector3.up;
+        }
+    }
+
     void FixedUpdate()
     {
+        GetSlopeNormal();
         Move();
     }
 

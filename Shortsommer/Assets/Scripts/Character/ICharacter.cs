@@ -2,6 +2,7 @@ using UnityEngine;
 
 public interface ICharacter
 {
+    bool IsGround { get; }
     IController Controller { get; }
     public void AttachController(IController controller);
     public void DetachController();
