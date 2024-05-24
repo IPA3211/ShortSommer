@@ -5,16 +5,23 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class HumanCharacter : MonoBehaviour, ICharacter
 {
+    [SerializeField] Transform slopeSensorPos;
+
     Rigidbody rb;
+
+    bool isOnGround = false;
 
     float accSpeed = 1f;
     float walkSpeed = 7f;
     float sprintSpeed = 12f;
     float maxSpeed = 10f;
+    float jumpPower = 200f;
 
     Vector2 moveDir = Vector2.zero;
+    Vector3 slopeNormal = Vector3.up;
 
     IController controller = null;
+    public bool IsGround => throw new System.NotImplementedException();
     public IController Controller => controller;
 
     public void AttachController(IController controller)
@@ -49,7 +56,10 @@ public class HumanCharacter : MonoBehaviour, ICharacter
     }
     public void Jump(bool o)
     {
-        Debug.Log("Jump");
+        if (isOnGround)
+        {
+            rb.AddForce(Vector3.up * jumpPower);
+        }
     }
 
     public void Interact(bool o)
@@ -87,6 +97,15 @@ public class HumanCharacter : MonoBehaviour, ICharacter
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        isOnGround = true;
+    }
+    void OnTriggerExit(Collider other)
+    {
+        isOnGround = false;
     }
 
 }
