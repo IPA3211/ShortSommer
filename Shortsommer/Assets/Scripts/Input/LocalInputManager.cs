@@ -7,6 +7,8 @@ public class LocalInputManager : MonoBehaviour, LocalInput.IPlayerActions, IInpu
     InputEventHandler inputEventHandler;
     InputStruct input;
 
+    bool isAiming = false;
+
     public InputStruct InputInfo => input;
     public InputEventHandler InputEventHandler => inputEventHandler;
 
@@ -21,20 +23,39 @@ public class LocalInputManager : MonoBehaviour, LocalInput.IPlayerActions, IInpu
 
     void FixedUpdate()
     {
+        CursorCheck();
         inputEventHandler.InputEventCheckLoop(input);
+    }
+
+    void CursorCheck()
+    {
+        if (isAiming)
+        {
+            RaycastHit hit;
+            var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                input.m_AimDir = hit.point;
+            }
+        }
+        else
+        {
+            input.m_AimDir = Vector3.zero;
+        }
     }
 
     public void OnAimming(InputAction.CallbackContext context)
     {
-        RaycastHit hit;
-        var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-        if (Physics.Raycast(ray, out hit))
+        if (context.canceled)
         {
-            Debug.Log(hit.point);
+            isAiming = false;
+        }
+        else
+        {
+            isAiming = true;
         }
     }
-
     public void OnFire(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -47,7 +68,6 @@ public class LocalInputManager : MonoBehaviour, LocalInput.IPlayerActions, IInpu
             input.m_fire = false;
         }
     }
-
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -60,7 +80,6 @@ public class LocalInputManager : MonoBehaviour, LocalInput.IPlayerActions, IInpu
             input.m_Interact = false;
         }
     }
-
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -73,12 +92,10 @@ public class LocalInputManager : MonoBehaviour, LocalInput.IPlayerActions, IInpu
             input.m_Jump = false;
         }
     }
-
     public void OnMove(InputAction.CallbackContext context)
     {
         input.m_MoveDir = context.ReadValue<Vector2>();
     }
-
     public void OnSprint(InputAction.CallbackContext context)
     {
         if (context.started)
