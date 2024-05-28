@@ -74,7 +74,6 @@ public class HumanCharacter : MonoBehaviour, ICharacter
     public void Aimming(Vector3 target)
     {
         aimmingDir = target;
-        Debug.Log(target);
     }
     public void Sprint(bool toggle)
     {
@@ -101,19 +100,51 @@ public class HumanCharacter : MonoBehaviour, ICharacter
     {
         if (moveDir != Vector2.zero && isOnGround)
         {
-            var direction3D = new Vector3(moveDir.x, 0, moveDir.y);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction3D), 0.3f);
-
-            var projectVector = Vector3.ProjectOnPlane(transform.forward, slopeNormal);
-            projectVector.Normalize();
-
-            if (Vector2.Angle(moveDir, new Vector2(transform.forward.x, transform.forward.z)) < 10)
+            if(aimmingDir == Vector3.zero)
+            {
+                if (Vector2.Angle(moveDir, new Vector2(transform.forward.x, transform.forward.z)) < 10)
+                {
+                    if (rb.velocity.magnitude < MoveSpeed)
+                    {
+                        var projectVector = Vector3.ProjectOnPlane(transform.forward, slopeNormal);
+                        projectVector.Normalize();
+                        rb.AddForce(projectVector * accSpeed, ForceMode.VelocityChange);
+                    }
+                }
+            }
+            else
             {
                 if (rb.velocity.magnitude < MoveSpeed)
                 {
+                    var projectVector = Vector3.ProjectOnPlane(new Vector3(moveDir.x, 0, moveDir.y), slopeNormal);
+                    projectVector.Normalize();
                     rb.AddForce(projectVector * accSpeed, ForceMode.VelocityChange);
                 }
             }
+        }
+    }
+
+    void Rotate()
+    {
+        if (isOnGround)
+        {
+            Vector3 rotateTo;
+            if (aimmingDir != Vector3.zero)
+            {
+                rotateTo = aimmingDir - transform.position;
+                rotateTo.y = 0;
+            }
+            else if (moveDir != Vector2.zero)
+            {
+                rotateTo = new Vector3(moveDir.x, 0, moveDir.y);
+            }
+            else
+            {
+                return;
+            }
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(rotateTo), 0.3f);
+            Debug.Log(rotateTo);
         }
     }
 
@@ -135,6 +166,7 @@ public class HumanCharacter : MonoBehaviour, ICharacter
     void FixedUpdate()
     {
         GetSlopeNormal();
+        Rotate();
         Move();
     }
 
