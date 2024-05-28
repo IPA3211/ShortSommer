@@ -46,6 +46,7 @@ public class PcController : MonoBehaviour, IController
     {
         if (character == null) return;
 
+        inputManager.InputEventHandler.Move.started -= character.Move;
         inputManager.InputEventHandler.Move.performed -= character.Move;
         inputManager.InputEventHandler.Move.canceled -= character.Move;
         inputManager.InputEventHandler.Aimming.performed -= character.Aimming;
