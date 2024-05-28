@@ -1,9 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public interface ICharacter
+public interface IControllee
 {
-    bool IsOnGround { get; }
-    bool IsSprint { get; }
     IController Controller { get; }
     void AttachController(IController controller);
     void DetachController();
