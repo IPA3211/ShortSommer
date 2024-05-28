@@ -20,6 +20,7 @@ public class HumanCharacter : MonoBehaviour, ICharacter
     float jumpPower = 200f;
 
     Vector2 moveDir = Vector2.zero;
+    Vector3 aimmingDir = Vector3.zero;
     Vector3 slopeNormal = Vector3.up;
 
     IController controller = null;
@@ -27,17 +28,24 @@ public class HumanCharacter : MonoBehaviour, ICharacter
     public bool IsSprint => isSprint;
     public IController Controller => controller;
     
-    public float MoveSpeed 
+    public float MoveSpeed // 최종 이동속도
     {
         get
         {
-            if (isSprint)
+            if (aimmingDir == Vector3.zero)
             {
-                return sprintSpeed;
+                if (isSprint)
+                {
+                    return sprintSpeed;
+                }
+                else
+                {
+                    return runSpeed;
+                }
             }
             else
             {
-                return runSpeed;
+                return walkSpeed;
             }
         } 
     }
@@ -63,13 +71,14 @@ public class HumanCharacter : MonoBehaviour, ICharacter
     {
         moveDir = direction;
     }
+    public void Aimming(Vector3 target)
+    {
+        aimmingDir = target;
+        Debug.Log(target);
+    }
     public void Sprint(bool toggle)
     {
         isSprint = toggle;
-    }
-    public void Aimming(Vector3 target)
-    {
-        Debug.Log("Aimming"); 
     }
     public void Jump(bool o)
     {
@@ -97,7 +106,6 @@ public class HumanCharacter : MonoBehaviour, ICharacter
 
             var projectVector = Vector3.ProjectOnPlane(transform.forward, slopeNormal);
             projectVector.Normalize();
-            Debug.Log(projectVector);
 
             if (Vector2.Angle(moveDir, new Vector2(transform.forward.x, transform.forward.z)) < 10)
             {
