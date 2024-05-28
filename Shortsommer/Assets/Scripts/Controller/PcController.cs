@@ -7,8 +7,8 @@ using UnityEngine.Scripting;
 public class PcController : MonoBehaviour, IController
 {
     IInputManager inputManager = null;
-    ICharacter character = null;
-    public ICharacter Character => character;
+    IControllee controllee = null;
+    public IControllee Controllee => controllee;
 
     void Awake()
     {
@@ -20,44 +20,44 @@ public class PcController : MonoBehaviour, IController
         }
     }
 
-    public void AttachCharacter(ICharacter character)
+    public void AttachControllee(IControllee controllee)
     {
-        if (character != null)
+        if (controllee != null)
         {
-            DetachCharacter();
+            DetachControllee();
         }
 
-        this.character = character;
+        this.controllee = controllee;
 
-        inputManager.InputEventHandler.Move.started += character.Move;
-        inputManager.InputEventHandler.Move.performed += character.Move;
-        inputManager.InputEventHandler.Move.canceled += character.Move;
-        inputManager.InputEventHandler.Aimming.performed += character.Aimming;
-        inputManager.InputEventHandler.Aimming.canceled += character.Aimming;
+        inputManager.InputEventHandler.Move.started += controllee.Move;
+        inputManager.InputEventHandler.Move.performed += controllee.Move;
+        inputManager.InputEventHandler.Move.canceled += controllee.Move;
+        inputManager.InputEventHandler.Aimming.performed += controllee.Aimming;
+        inputManager.InputEventHandler.Aimming.canceled += controllee.Aimming;
 
-        inputManager.InputEventHandler.Fire.performed += character.Fire;
-        inputManager.InputEventHandler.Jump.started += character.Jump;
-        inputManager.InputEventHandler.Sprint.started += character.Sprint;
-        inputManager.InputEventHandler.Sprint.canceled += character.Sprint;
-        inputManager.InputEventHandler.Interact.started += character.Interact;
+        inputManager.InputEventHandler.Fire.performed += controllee.Fire;
+        inputManager.InputEventHandler.Jump.started += controllee.Jump;
+        inputManager.InputEventHandler.Sprint.started += controllee.Sprint;
+        inputManager.InputEventHandler.Sprint.canceled += controllee.Sprint;
+        inputManager.InputEventHandler.Interact.started += controllee.Interact;
     }
 
-    public void DetachCharacter()
+    public void DetachControllee()
     {
-        if (character == null) return;
+        if (controllee == null) return;
 
-        inputManager.InputEventHandler.Move.started -= character.Move;
-        inputManager.InputEventHandler.Move.performed -= character.Move;
-        inputManager.InputEventHandler.Move.canceled -= character.Move;
-        inputManager.InputEventHandler.Aimming.performed -= character.Aimming;
-        inputManager.InputEventHandler.Aimming.canceled -= character.Aimming;
+        inputManager.InputEventHandler.Move.started -= controllee.Move;
+        inputManager.InputEventHandler.Move.performed -= controllee.Move;
+        inputManager.InputEventHandler.Move.canceled -= controllee.Move;
+        inputManager.InputEventHandler.Aimming.performed -= controllee.Aimming;
+        inputManager.InputEventHandler.Aimming.canceled -= controllee.Aimming;
 
-        inputManager.InputEventHandler.Fire.performed -= character.Fire;
-        inputManager.InputEventHandler.Jump.started -= character.Jump;
-        inputManager.InputEventHandler.Sprint.started -= character.Sprint;
-        inputManager.InputEventHandler.Sprint.canceled -= character.Sprint;
-        inputManager.InputEventHandler.Interact.started -= character.Interact;
+        inputManager.InputEventHandler.Fire.performed -= controllee.Fire;
+        inputManager.InputEventHandler.Jump.started -= controllee.Jump;
+        inputManager.InputEventHandler.Sprint.started -= controllee.Sprint;
+        inputManager.InputEventHandler.Sprint.canceled -= controllee.Sprint;
+        inputManager.InputEventHandler.Interact.started -= controllee.Interact;
 
-        character = null;
+        controllee = null;
     }
 }
