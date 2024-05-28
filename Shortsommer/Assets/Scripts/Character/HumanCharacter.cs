@@ -11,19 +11,36 @@ public class HumanCharacter : MonoBehaviour, ICharacter
     Rigidbody rb;
 
     bool isOnGround = false;
+    bool isSprint = false;
 
     float accSpeed = 1f;
     float walkSpeed = 7f;
     float sprintSpeed = 12f;
-    float maxSpeed = 10f;
+    float runSpeed = 10f;
     float jumpPower = 200f;
 
     Vector2 moveDir = Vector2.zero;
     Vector3 slopeNormal = Vector3.up;
 
     IController controller = null;
-    public bool IsGround => throw new System.NotImplementedException();
+    public bool IsOnGround => isOnGround;
+    public bool IsSprint => isSprint;
     public IController Controller => controller;
+    
+    public float MoveSpeed 
+    {
+        get
+        {
+            if (isSprint)
+            {
+                return sprintSpeed;
+            }
+            else
+            {
+                return runSpeed;
+            }
+        } 
+    }
 
     public void AttachController(IController controller)
     {
@@ -46,10 +63,9 @@ public class HumanCharacter : MonoBehaviour, ICharacter
     {
         moveDir = direction;
     }
-
     public void Sprint(bool toggle)
     {
-        Debug.Log("Sprint");
+        isSprint = toggle;
     }
     public void Aimming(Vector3 target)
     {
@@ -62,7 +78,6 @@ public class HumanCharacter : MonoBehaviour, ICharacter
             rb.AddForce(Vector3.up * jumpPower);
         }
     }
-
     public void Interact(bool o)
     {
         Debug.Log("Interact");
@@ -86,7 +101,7 @@ public class HumanCharacter : MonoBehaviour, ICharacter
 
             if (Vector2.Angle(moveDir, new Vector2(transform.forward.x, transform.forward.z)) < 10)
             {
-                if (rb.velocity.magnitude < maxSpeed)
+                if (rb.velocity.magnitude < MoveSpeed)
                 {
                     rb.AddForce(projectVector * accSpeed, ForceMode.VelocityChange);
                 }

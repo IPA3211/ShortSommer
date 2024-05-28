@@ -2,7 +2,8 @@ using UnityEngine;
 
 public interface ICharacter
 {
-    bool IsGround { get; }
+    bool IsOnGround { get; }
+    bool IsSprint { get; }
     IController Controller { get; }
     public void AttachController(IController controller);
     public void DetachController();
