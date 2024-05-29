@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HumanCharacter : SommerCharacter
+public class Human : SommerCharacter
 {
     protected override void Start()
     {
