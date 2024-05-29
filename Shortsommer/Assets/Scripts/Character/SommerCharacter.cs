@@ -22,7 +22,7 @@ public class SommerCharacter : MonoBehaviour, IControllee
     public bool IsOnGround => isOnGround;
     public bool IsSprint => isSprint;
     public IController Controller => controller;
-    
+
     public float MoveSpeed // 최종 이동속도
     {
         get
@@ -42,12 +42,12 @@ public class SommerCharacter : MonoBehaviour, IControllee
             {
                 return walkSpeed;
             }
-        } 
+        }
     }
 
     public void AttachController(IController controller)
     {
-        if(this.controller == controller) return;
+        if (this.controller == controller) return;
 
         DetachController();
         this.controller = controller;
@@ -56,7 +56,7 @@ public class SommerCharacter : MonoBehaviour, IControllee
 
     public void DetachController()
     {
-        if(controller == null) return;
+        if (controller == null) return;
 
         moveDir = Vector2.zero;
         controller.DetachControllee();
@@ -84,7 +84,7 @@ public class SommerCharacter : MonoBehaviour, IControllee
     public virtual void Aimming(Vector3 target)
     {
         aimmingDir = target;
-        
+
         var rotateTo = aimmingDir - transform.position;
         rotateTo.y = 0;
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(rotateTo), 0.3f);
@@ -126,7 +126,7 @@ public class SommerCharacter : MonoBehaviour, IControllee
         int layerMask = 1 << LayerMask.NameToLayer("Ground");
         var ray = new Ray(transform.position + MoveDir3D * 0.2f, Vector3.down);
 
-        if(Physics.Raycast(ray, out var hit, 2f, layerMask))
+        if (Physics.Raycast(ray, out var hit, 2f, layerMask))
         {
             return hit.normal;
         }

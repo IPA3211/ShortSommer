@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Scripting;
 
 public class PcController : MonoBehaviour, IController
 {
@@ -14,7 +10,7 @@ public class PcController : MonoBehaviour, IController
     {
         inputManager = GetComponent<IInputManager>();
 
-        if(inputManager == null)
+        if (inputManager == null)
         {
             Debug.LogWarning("PcController : IInputManager is required.");
         }

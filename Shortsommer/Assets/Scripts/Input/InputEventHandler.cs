@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Windows;
 
 // 이전에 가직고 있던 InputStruct와 비교해서 Start, Perform, Cancel 구별
 public class InputEventHandler
@@ -15,7 +14,7 @@ public class InputEventHandler
 
     public void InputEventCheckLoop(InputStruct newInputStruct)
     {
-        if (lastStruct.MoveDir != newInputStruct.MoveDir && lastStruct.MoveDir == Vector2.zero) {Move.OnStarted(newInputStruct.MoveDir); }
+        if (lastStruct.MoveDir != newInputStruct.MoveDir && lastStruct.MoveDir == Vector2.zero) { Move.OnStarted(newInputStruct.MoveDir); }
         else if (newInputStruct.MoveDir != Vector2.zero) { Move.OnPerformed(newInputStruct.MoveDir); }
         else if (lastStruct.MoveDir != newInputStruct.MoveDir && newInputStruct.MoveDir == Vector2.zero) { Move.OnCanceled(newInputStruct.MoveDir); }
 
