@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class SommerCharacter : MonoBehaviour, IControllee
+public class SommerCharacter : SommerObject, IControllee, IInteracter
 {
     Rigidbody rb;
 
@@ -149,5 +149,10 @@ public class SommerCharacter : MonoBehaviour, IControllee
     void OnTriggerExit(Collider other)
     {
         isOnGround = false;
+    }
+
+    public void Interact(IInteractee interactee)
+    {
+        throw new System.NotImplementedException();
     }
 }
