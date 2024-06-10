@@ -102,7 +102,15 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
     }
     public virtual void Interact(bool o)
     {
-        Debug.Log("Interact");
+        int layerMask = 1 << LayerMask.NameToLayer("Default");
+        var ray = new Ray(transform.position + transform.forward * 0.2f, transform.forward);
+        if (Physics.Raycast(ray, out var hit, 2f, layerMask))
+        {
+            if (hit.collider.TryGetComponent<IInteractee>(out var interactee))
+            {
+                interactee.OnInteract(this);
+            }
+        }
     }
 
     public virtual void Fire(bool o)
@@ -149,10 +157,5 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
     void OnTriggerExit(Collider other)
     {
         isOnGround = false;
-    }
-
-    public void Interact(IInteractee interactee)
-    {
-        throw new System.NotImplementedException();
     }
 }
