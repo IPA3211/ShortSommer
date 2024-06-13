@@ -8,6 +8,7 @@ public class LocalInputManager : MonoBehaviour, LocalInput.IPlayerActions, IInpu
     InputStruct input;
 
     bool isAiming = false;
+    bool isFiring = false;
 
     public InputStruct InputInfo => input;
     public InputEventHandler InputEventHandler => inputEventHandler;
@@ -29,11 +30,11 @@ public class LocalInputManager : MonoBehaviour, LocalInput.IPlayerActions, IInpu
 
     void CursorCheck()
     {
+        RaycastHit hit;
+        var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
         if (isAiming)
         {
-            RaycastHit hit;
-            var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
             if (Physics.Raycast(ray, out hit))
             {
                 input.m_AimDir = hit.point;
@@ -42,6 +43,18 @@ public class LocalInputManager : MonoBehaviour, LocalInput.IPlayerActions, IInpu
         else
         {
             input.m_AimDir = Vector3.zero;
+        }
+
+        if (isFiring)
+        {
+            if (Physics.Raycast(ray, out hit))
+            {
+                input.m_fireDir = hit.point;
+            }
+        }
+        else
+        {
+            input.m_fireDir = Vector3.zero;
         }
     }
 
@@ -58,14 +71,13 @@ public class LocalInputManager : MonoBehaviour, LocalInput.IPlayerActions, IInpu
     }
     public void OnFire(InputAction.CallbackContext context)
     {
-        if (context.started)
-        {
-            input.m_fire = true;
-        }
-
         if (context.canceled)
         {
-            input.m_fire = false;
+            isFiring = false;
+        }
+        else
+        {
+            isFiring = true;
         }
     }
     public void OnInteract(InputAction.CallbackContext context)
