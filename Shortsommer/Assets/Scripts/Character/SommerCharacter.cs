@@ -3,27 +3,33 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class SommerCharacter : SommerObject, IControllee, IInteracter
 {
-    Rigidbody rb;
-
     bool isOnGround = false;
     bool isSprint = false;
 
-    float accSpeed = 1f;
-    float walkSpeed = 7f;
-    float sprintSpeed = 12f;
-    float runSpeed = 10f;
-    float jumpPower = 200f;
+    readonly float accSpeed = 1f;
+    readonly float maxSpeed = 10;
+    readonly float walk = 0.5f;
+    readonly float sprint = 1f;
+    readonly float run = 0.75f;
+    readonly float jumpPower = 200f;
 
     Vector2 moveDir = Vector2.zero;
     Vector3 aimmingDir = Vector3.zero;
+    Vector3 fireDir = Vector3.zero;
     IController controller = null;
 
-    Vector3 MoveDir3D => new Vector3(moveDir.x, 0, moveDir.y);
+    Rigidbody rb = null;
+
+    public Vector3 AimmingDir3D => aimmingDir;
+    public Vector3 MoveDir3D => new Vector3(moveDir.x, 0, moveDir.y);
+    public Vector3 FireDir => fireDir;
+    public Vector3 Velocity => rb.velocity;
+    public float MaxSpeed => maxSpeed;
     public bool IsOnGround => isOnGround;
     public bool IsSprint => isSprint;
     public IController Controller => controller;
 
-    public float MoveSpeed // 최종 이동속도
+    public float MoveMultiplier // 최종 이동속도
     {
         get
         {
@@ -31,16 +37,16 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
             {
                 if (isSprint)
                 {
-                    return sprintSpeed;
+                    return sprint;
                 }
                 else
                 {
-                    return runSpeed;
+                    return run;
                 }
             }
             else
             {
-                return walkSpeed;
+                return walk;
             }
         }
     }
@@ -70,14 +76,14 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
             if (aimmingDir == Vector3.zero) // 조준 안함
             {
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(MoveDir3D), 0.3f);
-                if (Vector2.Angle(moveDir, new Vector2(transform.forward.x, transform.forward.z)) < 10)
+                if (Vector2.Angle(moveDir, new Vector2(transform.forward.x, transform.forward.z)) < 170)
                 {
-                    AddForceWithProject(transform.forward, accSpeed, MoveSpeed);
+                    AddForceWithProject(transform.forward, accSpeed, MoveMultiplier * maxSpeed);
                 }
             }
             else // 조준중
             {
-                AddForceWithProject(MoveDir3D, accSpeed, MoveSpeed);
+                AddForceWithProject(MoveDir3D, accSpeed, MoveMultiplier * maxSpeed);
             }
         }
     }
@@ -85,9 +91,16 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
     {
         aimmingDir = target;
 
-        var rotateTo = aimmingDir - transform.position;
-        rotateTo.y = 0;
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(rotateTo), 0.3f);
+        if(aimmingDir != Vector3.zero)
+        {
+            var rotateTo = aimmingDir - transform.position;
+            rotateTo.y = 0;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(rotateTo), 0.3f);
+        }
+    }
+    public virtual void Fire(Vector3 target)
+    {
+        fireDir = target;
     }
     public virtual void Sprint(bool toggle)
     {
@@ -112,12 +125,6 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
             }
         }
     }
-
-    public virtual void Fire(bool o)
-    {
-        Debug.Log("Fire");
-    }
-
     void AddForceWithProject(Vector3 dir, float pow, float cap)
     {
         var slopeNormal = GetSlopeNormal();
@@ -133,7 +140,7 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
     {
         int layerMask = 1 << LayerMask.NameToLayer("Ground");
         var ray = new Ray(transform.position + MoveDir3D * 0.2f, Vector3.down);
-
+        
         if (Physics.Raycast(ray, out var hit, 2f, layerMask))
         {
             return hit.normal;
