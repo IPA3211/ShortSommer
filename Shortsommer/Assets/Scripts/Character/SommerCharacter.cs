@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class SommerCharacter : SommerObject, IControllee, IInteracter
 {
+    [SerializeField] ColliderTrigger groundTrigger;
+
     bool isOnGround = false;
     bool isSprint = false;
 
@@ -154,15 +156,14 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody>();
-    }
 
-    void OnTriggerStay(Collider other)
-    {
-        isOnGround = true;
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        isOnGround = false;
+        groundTrigger.OnTriggerStayEvent.AddListener(e =>
+        {
+            isOnGround = true;
+        });
+        groundTrigger.OnTriggerExitEvent.AddListener(e =>
+        {
+            isOnGround = false;
+        });
     }
 }

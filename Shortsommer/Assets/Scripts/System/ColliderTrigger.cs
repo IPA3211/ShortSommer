@@ -7,6 +7,10 @@ public class ColliderTrigger : MonoBehaviour
     [SerializeField] UnityEvent<Collider> onTriggerStay;
     [SerializeField] UnityEvent<Collider> onTriggerExit;
 
+    public UnityEvent<Collider> OnTriggerEnterEvent => onTriggerEnter;
+    public UnityEvent<Collider> OnTriggerStayEvent => onTriggerStay;
+    public UnityEvent<Collider> OnTriggerExitEvent => onTriggerExit;
+
     private void OnTriggerEnter(Collider other)
     {
         onTriggerEnter?.Invoke(other);
