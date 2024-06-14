@@ -32,6 +32,7 @@ public class PcController : MonoBehaviour, IController
         inputManager.InputEventHandler.Aimming.canceled += controllee.Aimming;
 
         inputManager.InputEventHandler.Fire.performed += controllee.Fire;
+        inputManager.InputEventHandler.Fire.canceled += controllee.Fire;
         inputManager.InputEventHandler.Jump.started += controllee.Jump;
         inputManager.InputEventHandler.Sprint.started += controllee.Sprint;
         inputManager.InputEventHandler.Sprint.canceled += controllee.Sprint;
@@ -49,6 +50,7 @@ public class PcController : MonoBehaviour, IController
         inputManager.InputEventHandler.Aimming.canceled -= controllee.Aimming;
 
         inputManager.InputEventHandler.Fire.performed -= controllee.Fire;
+        inputManager.InputEventHandler.Fire.canceled -= controllee.Fire;
         inputManager.InputEventHandler.Jump.started -= controllee.Jump;
         inputManager.InputEventHandler.Sprint.started -= controllee.Sprint;
         inputManager.InputEventHandler.Sprint.canceled -= controllee.Sprint;
