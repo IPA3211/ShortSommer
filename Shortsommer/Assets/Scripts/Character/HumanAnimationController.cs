@@ -12,18 +12,17 @@ public class HumanAnimationController : MonoBehaviour, ICharacterAniCallback
     {
 
     }
-
     public void AnimAttackStart()
     {
 
     }
     public void AnimEquipWeaponStart()
     {
-
+        human.ArmWeapon();
     }
     public void AnimEquipWeaponEnd()
     {
-
+        human.UnarmWeapon();
     }
 
     void Start()

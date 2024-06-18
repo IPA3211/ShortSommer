@@ -10,10 +10,23 @@ public class Human : SommerCharacter
 
     public void ArmWeapon()
     {
-            
+        if(weapon is MeleeWeaponObject)
+        {
+            weapon.transform.SetParent(meleeWeaponHolder);
+        }
+        else
+        {
+            weapon.transform.SetParent(rangeWeaponHolder);
+        }
+
+        weapon.transform.localPosition = Vector3.zero;
+        weapon.transform.localRotation = Quaternion.identity;
     }
+
     public void UnarmWeapon()
     {
-
+        weapon.transform.SetParent(meleeWeaponHolder);
+        weapon.transform.localPosition = Vector3.zero;
+        weapon.transform.localRotation = Quaternion.identity;
     }
 }
