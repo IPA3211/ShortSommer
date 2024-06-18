@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WeaponMelee : Weapon
+public class MeleeWeaponObject : WeaponObject
 {
     public override WeaponType WeaponType => WeaponType.Melee;
 

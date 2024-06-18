@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WeaponGun : Weapon
+public class RangeWeaponObject : WeaponObject
 {
     public override WeaponType WeaponType => WeaponType.Range;
 
