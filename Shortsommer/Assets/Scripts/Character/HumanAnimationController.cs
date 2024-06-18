@@ -17,6 +17,14 @@ public class HumanAnimationController : MonoBehaviour, ICharacterAniCallback
     {
 
     }
+    public void AnimEquipWeaponStart()
+    {
+
+    }
+    public void AnimEquipWeaponEnd()
+    {
+
+    }
 
     void Start()
     {
@@ -45,4 +53,5 @@ public class HumanAnimationController : MonoBehaviour, ICharacterAniCallback
             animator.SetBool("IsAttacking", false);
         }
     }
+
 }

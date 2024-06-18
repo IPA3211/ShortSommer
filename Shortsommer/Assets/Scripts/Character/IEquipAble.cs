@@ -1,5 +1,5 @@
 
 public interface IEquipAble
 {
-    Weapon EquipedWeapon { get; }
+    WeaponObject EquipedWeapon { get; }
 }
