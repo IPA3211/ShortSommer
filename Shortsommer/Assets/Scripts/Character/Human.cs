@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class Human : SommerCharacter
 {
@@ -6,27 +8,32 @@ public class Human : SommerCharacter
     [SerializeField] Transform meleeWeaponHolder;
     [SerializeField] Transform rangeWeaponHolder;
 
-    WeaponObject weapon;
+    public override async Task SetWeaponAsync(ItemWeapon newWeapon)
+    {
+        await base.SetWeaponAsync(newWeapon);
+
+        UnarmWeapon();
+    }
 
     public void ArmWeapon()
     {
-        if(weapon is MeleeWeaponObject)
+        if(WeaponObject is MeleeWeaponObject)
         {
-            weapon.transform.SetParent(meleeWeaponHolder);
+            WeaponObject.transform.SetParent(meleeWeaponHolder);
         }
         else
         {
-            weapon.transform.SetParent(rangeWeaponHolder);
+            WeaponObject.transform.SetParent(rangeWeaponHolder);
         }
 
-        weapon.transform.localPosition = Vector3.zero;
-        weapon.transform.localRotation = Quaternion.identity;
+        WeaponObject.transform.localPosition = Vector3.zero;
+        WeaponObject.transform.localRotation = Quaternion.identity;
     }
 
     public void UnarmWeapon()
     {
-        weapon.transform.SetParent(meleeWeaponHolder);
-        weapon.transform.localPosition = Vector3.zero;
-        weapon.transform.localRotation = Quaternion.identity;
+        WeaponObject.transform.SetParent(backWeaponHolder);
+        WeaponObject.transform.localPosition = Vector3.zero;
+        WeaponObject.transform.localRotation = Quaternion.identity;
     }
 }

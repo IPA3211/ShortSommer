@@ -8,13 +8,13 @@ public class HumanAnimationController : MonoBehaviour, ICharacterAniCallback
 {
     Human human;
     Animator animator;
-    public void AnimAttackEnd()
-    {
-
-    }
     public void AnimAttackStart()
     {
-
+        human.WeaponObject?.OnAttackStart();
+    }
+    public void AnimAttackEnd()
+    {
+        human.WeaponObject?.OnAttackEnd();
     }
     public void AnimEquipWeaponStart()
     {
@@ -51,6 +51,8 @@ public class HumanAnimationController : MonoBehaviour, ICharacterAniCallback
             animator.SetBool("IsAimming", false);
             animator.SetBool("IsAttacking", false);
         }
+
+        animator.SetInteger("WeaponType", human.WeaponObject != null ? (int)human.WeaponObject.WeaponType : 0);
     }
 
 }

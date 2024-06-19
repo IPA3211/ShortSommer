@@ -5,7 +5,6 @@ using UnityEngine;
 public class WeaponObject : MonoBehaviour
 {
     public virtual WeaponType WeaponType => WeaponType.None;
-
     public virtual void OnAttackStart()
     {
 
