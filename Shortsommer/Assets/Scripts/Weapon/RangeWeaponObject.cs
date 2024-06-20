@@ -7,7 +7,7 @@ public class RangeWeaponObject : WeaponObject
     public override WeaponType WeaponType => WeaponType.Range;
     public override void OnAttackStart()
     {
-        Destroy(Instantiate(bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation), 3);
+        Instantiate(bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
     }
 
     public override void OnAttackEnd()
