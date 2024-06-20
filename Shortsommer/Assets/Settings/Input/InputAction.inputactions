@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Aimming",
+                    "name": "Aiming",
                     "type": "Button",
                     "id": "fe37a3ab-371f-4c6e-814c-234ab74d249f",
                     "expectedControlType": "Button",
@@ -145,7 +145,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Aimming",
+                    "action": "Aiming",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

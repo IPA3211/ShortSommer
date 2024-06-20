@@ -28,8 +28,8 @@ public class PcController : MonoBehaviour, IController
         inputManager.InputEventHandler.Move.started += controllee.Move;
         inputManager.InputEventHandler.Move.performed += controllee.Move;
         inputManager.InputEventHandler.Move.canceled += controllee.Move;
-        inputManager.InputEventHandler.Aimming.performed += controllee.Aimming;
-        inputManager.InputEventHandler.Aimming.canceled += controllee.Aimming;
+        inputManager.InputEventHandler.Aimming.performed += controllee.Aiming;
+        inputManager.InputEventHandler.Aimming.canceled += controllee.Aiming;
 
         inputManager.InputEventHandler.Fire.performed += controllee.Fire;
         inputManager.InputEventHandler.Fire.canceled += controllee.Fire;
@@ -46,8 +46,8 @@ public class PcController : MonoBehaviour, IController
         inputManager.InputEventHandler.Move.started -= controllee.Move;
         inputManager.InputEventHandler.Move.performed -= controllee.Move;
         inputManager.InputEventHandler.Move.canceled -= controllee.Move;
-        inputManager.InputEventHandler.Aimming.performed -= controllee.Aimming;
-        inputManager.InputEventHandler.Aimming.canceled -= controllee.Aimming;
+        inputManager.InputEventHandler.Aimming.performed -= controllee.Aiming;
+        inputManager.InputEventHandler.Aimming.canceled -= controllee.Aiming;
 
         inputManager.InputEventHandler.Fire.performed -= controllee.Fire;
         inputManager.InputEventHandler.Fire.canceled -= controllee.Fire;

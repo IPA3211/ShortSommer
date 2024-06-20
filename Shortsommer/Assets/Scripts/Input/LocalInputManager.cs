@@ -58,7 +58,7 @@ public class LocalInputManager : MonoBehaviour, LocalInput.IPlayerActions, IInpu
         }
     }
 
-    public void OnAimming(InputAction.CallbackContext context)
+    public void OnAiming(InputAction.CallbackContext context)
     {
         if (context.canceled)
         {

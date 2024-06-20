@@ -1,11 +1,13 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Animations.Rigging;
 
 [RequireComponent(typeof(Rigidbody))]
 public class SommerCharacter : SommerObject, IControllee, IInteracter
 {
     [SerializeField] ColliderTrigger groundTrigger;
+    [SerializeField] Rig rig;
 
     bool isOnGround = false;
     bool isSprint = false;
@@ -95,7 +97,7 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
             }
         }
     }
-    public virtual void Aimming(Vector3 target)
+    public virtual void Aiming(Vector3 target)
     {
         aimmingDir = target;
 
@@ -141,6 +143,19 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
             var projectVector = Vector3.ProjectOnPlane(dir, slopeNormal);
             projectVector.Normalize();
             rb.AddForce(projectVector * pow, ForceMode.VelocityChange);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        return;
+        if(aimmingDir != Vector3.zero)
+        {
+            rig.weight = Mathf.Lerp(rig.weight, 1, 0.1f);
+        }
+        else
+        {
+            rig.weight = Mathf.Lerp(rig.weight, 0, 0.1f);
         }
     }
 
