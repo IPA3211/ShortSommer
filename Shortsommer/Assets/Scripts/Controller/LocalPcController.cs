@@ -1,61 +1,64 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class LocalInputManager : MonoBehaviour, LocalInput.IPlayerActions, IInputManager
+public class LocalPcController
+    : MonoBehaviour, LocalInput.IPlayerActions, IController
 {
     LocalInput playerInput;
-    InputEventHandler inputEventHandler;
-    InputStruct input;
 
+    Vector2 moveVector2 = Vector2.zero;
     bool isAiming = false;
     bool isFiring = false;
 
-    public InputStruct InputInfo => input;
-    public InputEventHandler InputEventHandler => inputEventHandler;
+    IControllee controllee = null;
+    public IControllee Controllee => throw new System.NotImplementedException();
+
+    public void AttachControllee(IControllee controllee)
+    {
+        if (controllee != null)
+        {
+            DetachControllee();
+        }
+
+        this.controllee = controllee;
+
+    }
+    public void DetachControllee()
+    {
+        if (controllee == null) return;
+
+        controllee = null;
+    }
 
     public void Awake()
     {
         playerInput = new LocalInput();
         playerInput.Player.Enable();
         playerInput.Player.AddCallbacks(this);
-
-        inputEventHandler = new InputEventHandler();
     }
 
     void FixedUpdate()
     {
         CursorCheck();
-        inputEventHandler.InputEventCheckLoop(input);
     }
 
     void CursorCheck()
     {
-        RaycastHit hit;
-        var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-        if (isAiming)
+        if (isAiming || isFiring)
         {
+            RaycastHit hit;
+            var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             if (Physics.Raycast(ray, out hit))
             {
-                input.m_AimDir = hit.point;
+                if(isAiming) controllee.Aiming(hit.point);
+                if(isFiring) controllee.Fire(hit.point);
             }
-        }
-        else
-        {
-            input.m_AimDir = Vector3.zero;
         }
 
-        if (isFiring)
-        {
-            if (Physics.Raycast(ray, out hit))
-            {
-                input.m_fireDir = hit.point;
-            }
-        }
-        else
-        {
-            input.m_fireDir = Vector3.zero;
-        }
+        if (!isAiming) controllee.Aiming(Vector3.zero);
+        if (!isFiring) controllee.Fire(Vector3.zero);
+
+        controllee.Move(moveVector2);
     }
 
     public void OnAiming(InputAction.CallbackContext context)
@@ -84,40 +87,41 @@ public class LocalInputManager : MonoBehaviour, LocalInput.IPlayerActions, IInpu
     {
         if (context.started)
         {
-            input.m_Interact = true;
+            controllee.Interact(true);
         }
 
         if (context.canceled)
         {
-            input.m_Interact = false;
+            controllee.Interact(false);
         }
     }
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            input.m_Jump = true;
+            controllee.Jump(true);
         }
 
         if (context.canceled)
         {
-            input.m_Jump = false;
+            controllee.Jump(false);
         }
     }
     public void OnMove(InputAction.CallbackContext context)
     {
-        input.m_MoveDir = context.ReadValue<Vector2>();
+        moveVector2 = context.ReadValue<Vector2>();
     }
     public void OnSprint(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            input.m_Sprint = true;
+            controllee.Sprint(true);
         }
 
         if (context.canceled)
         {
-            input.m_Sprint = false;
+            controllee.Sprint(false);
         }
     }
+
 }

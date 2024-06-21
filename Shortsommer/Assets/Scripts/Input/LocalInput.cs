@@ -29,7 +29,7 @@ public partial class @LocalInput: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Value"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""5accff64-d229-4fe3-b731-cb363d14b787"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
