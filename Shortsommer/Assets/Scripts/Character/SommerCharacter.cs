@@ -6,6 +6,7 @@ using UnityEngine.Animations.Rigging;
 [RequireComponent(typeof(Rigidbody))]
 public class SommerCharacter : SommerObject, IControllee, IInteracter
 {
+    [SerializeField] Transform aimingTransform;
     [SerializeField] ColliderTrigger groundTrigger;
     [SerializeField] Rig rig;
 
@@ -101,11 +102,16 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
     {
         aimmingDir = target;
 
-        if(aimmingDir != Vector3.zero)
+        if (aimmingDir != Vector3.zero)
         {
             var rotateTo = aimmingDir - transform.position;
             rotateTo.y = 0;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(rotateTo), 0.3f);
+            aimingTransform.position = Vector3.Lerp(aimingTransform.position, target, 0.1f);
+        }
+        else
+        {
+            aimingTransform.position = transform.position + transform.forward;
         }
     }
     public virtual void Fire(Vector3 target)
@@ -148,7 +154,6 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
 
     void FixedUpdate()
     {
-        return;
         if(aimmingDir != Vector3.zero)
         {
             rig.weight = Mathf.Lerp(rig.weight, 1, 0.1f);
