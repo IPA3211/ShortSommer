@@ -193,15 +193,21 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
     {
         rb = GetComponent<Rigidbody>();
 
-        SetWeaponAsync(new ItemWeapon("aa", "bb", "asd", "WeaponGun"));
+        _ = SetWeaponAsync(new ItemWeapon("aa", "bb", "asd", "WeaponAxe"));
 
         groundTrigger.OnTriggerStayEvent.AddListener(e =>
         {
-            isOnGround = true;
+            if(e.gameObject != gameObject)
+            {
+                isOnGround = true;
+            }
         });
         groundTrigger.OnTriggerExitEvent.AddListener(e =>
         {
-            isOnGround = false;
+            if (e.gameObject != gameObject)
+            {
+                isOnGround = false;
+            }
         });
     }
 }

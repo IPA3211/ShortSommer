@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2913361713463082129}
   - component: {fileID: 5231406830541073328}
   - component: {fileID: 5440111421211791689}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MeleeWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: -3352497396914197001}
   - component: {fileID: 7259193888064433365}
   - component: {fileID: 8629549613153112325}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WeaponAxe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
