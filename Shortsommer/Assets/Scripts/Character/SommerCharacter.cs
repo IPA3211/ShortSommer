@@ -20,8 +20,8 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
     readonly float jumpPower = 200f;
 
     CharacterStatus status = new CharacterStatus();
-    ItemWeapon weapon;
-    WeaponObject weaponObject;
+    TemplateWeapon weapon;
+    WeaponObject weaponObject; 
 
     Vector2 moveDir = Vector2.zero;
     Vector3 aimmingDir = Vector3.zero;
@@ -179,7 +179,7 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
         }
     }
 
-    public virtual async Task SetWeaponAsync(ItemWeapon newWeapon)
+    public virtual async Task SetWeaponAsync(TemplateWeapon newWeapon)
     {
         weapon = newWeapon;
 
@@ -198,7 +198,7 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
     {
         rb = GetComponent<Rigidbody>();
 
-        _ = SetWeaponAsync(new ItemWeapon("aa", "bb", "asd", "WeaponAxe"));
+        _ = SetWeaponAsync(new TemplateWeapon("aa", "bb", "asd", "WeaponAxe"));
 
         groundTrigger.OnTriggerStayEvent.AddListener(e =>
         {

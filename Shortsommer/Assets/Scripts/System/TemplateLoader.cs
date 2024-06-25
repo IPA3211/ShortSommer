@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-internal interface IItem
+public class TemplateLoader
 {
-    string Name { get; }
-    string Description { get; }
-    string Icon { get; }
+
 }

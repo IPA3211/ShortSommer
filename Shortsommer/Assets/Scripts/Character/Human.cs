@@ -8,7 +8,7 @@ public class Human : SommerCharacter
     [SerializeField] Transform meleeWeaponHolder;
     [SerializeField] Transform rangeWeaponHolder;
 
-    public override async Task SetWeaponAsync(ItemWeapon newWeapon)
+    public override async Task SetWeaponAsync(TemplateWeapon newWeapon)
     {
         await base.SetWeaponAsync(newWeapon);
 

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-internal interface IEquipment : IDescriptable
+internal interface IDescriptable
 {
-    string PrefabPath { get; }
+    string Name { get; }
+    string Description { get; }
+    string Icon { get; }
 }
