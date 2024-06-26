@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [Serializable]
-public class TemplateItem : IDescriptable, IStackable
+public class BaseItemDef : DefBase, IDescriptable, IStackable
 {
     [SerializeField] string name;
     [SerializeField] string description;
@@ -13,11 +13,4 @@ public class TemplateItem : IDescriptable, IStackable
     public string Description => description;
     public string Icon => icon;
     public int MaxStack => maxStack;
-
-    public TemplateItem(string name, string description, string icon)
-    {
-        this.name = name;
-        this.description = description;
-        this.icon = icon;
-    }
 }

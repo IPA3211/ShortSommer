@@ -4,7 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-internal interface IEquipment : IDescriptable
+
+public class LoadDefs
 {
-    string PrefabPath { get; }
+    public void ReadAllDefs()
+    {
+
+    }
 }
