@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfDef xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/">
+  <Def i:type="BaseMeleeWeapon">
+    <defId></defId>
+    <attackSpeed>1</attackSpeed>
+    <description></description>
+    <icon></icon>
+    <name></name>
+    <prefabPath></prefabPath>
+  </Def>
+  <Def i:type="BaseItem">
+    <defId></defId>
+    <description></description>
+    <icon></icon>
+    <maxStack>0</maxStack>
+    <name></name>
+    <prefabPath></prefabPath>
+  </Def>
+</ArrayOfDef>

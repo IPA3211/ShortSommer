@@ -20,12 +20,13 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
     readonly float jumpPower = 200f;
 
     CharacterStatus status = new CharacterStatus();
-    BaseWeaponDef weapon;
+    IWeapon weapon;
     WeaponObject weaponObject; 
 
     Vector2 moveDir = Vector2.zero;
     Vector3 aimmingDir = Vector3.zero;
     Vector3 fireDir = Vector3.zero;
+
     IController controller = null;
 
     Rigidbody rb = null;
@@ -179,7 +180,7 @@ public class SommerCharacter : SommerObject, IControllee, IInteracter
         }
     }
 
-    public virtual async Task SetWeaponAsync(BaseWeaponDef newWeapon)
+    public virtual async Task SetWeaponAsync(IWeapon newWeapon)
     {
         weapon = newWeapon;
 
